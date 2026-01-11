@@ -1,33 +1,49 @@
-# Stock Volatility Prediction
+# Stock Volatility Prediction: Time-Series Regression Analysis
 
-📌 Project Overview
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![Scikit-Learn](https://img.shields.io/badge/Machine%20Learning-Scikit--Learn-orange.svg)
+![Gradient Boosting](https://img.shields.io/badge/Models-CatBoost%20%7C%20LightGBM%20%7C%20RF-green.svg)
 
-This project focuses on predicting future stock market volatility using a combination of historical trading data and quarterly financial metrics. By leveraging advanced feature engineering—such as cyclical time encoding and volatility clustering captures (EMA/SMA)—this assessment compares the performance of three powerful regression models: LightGBM, CatBoost, and Random Forest.
+## 📌 Project Overview
+This project predicts future stock market volatility by integrating historical price action with quarterly financial fundamentals. The primary challenge addressed is the temporal dependency of market data (volatility clustering). By implementing advanced feature engineering and comparing three ensemble-based regression models, this project identifies the most effective predictors of market risk.
 
-The objective is to minimize the Root Mean Squared Error (RMSE) on a hold-out validation set that simulates real-world temporal forecasting.
+## 📊 Dataset Overview
+The dataset consists of **13,486 observations** including:
+* **Market Data:** Open, Close, High, Low, Volume, and Return.
+* **Fundamental Data:** Revenue, Net Income, EPS, Total Assets, Liabilities, and Cash Flow metrics.
+* **Target Variable:** `Volatility` (Standard Deviation of returns).
 
-This is a solid foundation for a portfolio-grade GitHub repository. Your notebook demonstrates strong feature engineering—particularly the use of cyclical encoding and exponential moving averages (EMAs)—which clearly paid off given the low RMSE scores.
+## 🛠️ Feature Engineering & Preprocessing
+To improve model performance and ensure statistical validity, several key transformations were performed:
 
-📊 Dataset Description
+* **Log Transformation:** Applied `np.log1p` to the target variable to mitigate heavy right-skewness and stabilize variance.
 
-The dataset contains 13,486 rows of historical stock data, including:
+* **Cyclical Encoding:** Months (1-12) were transformed using Sine and Cosine functions to preserve the temporal proximity between December and January.
+* **Volatility Clustering (Lags):** Engineered 1, 2, and 3-month lags for `Volatility_Log` and `Volume` to capture the "long memory" effect in market volatility.
+* **Trend Indicators:** Developed 3 and 6-period Simple Moving Averages (SMA) and Exponential Moving Averages (EMA) to smooth noise and highlight momentum.
 
-Price Action: Open, Close, High, Low, Return.
+## 🚀 Modelling & Performance
+The models were evaluated using a **Time-Series Split** (80% training / 20% validation) to prevent data leakage. Hyperparameters were optimized via `RandomizedSearchCV`.
 
-Trading Metrics: Volume, Amount, Avg_Price.
+### RMSE Results Comparison
+| Model | Validation RMSE |
+| :--- | :--- |
+| **CatBoost Regressor** | **0.2046** |
+| **Random Forest** | 0.2519 |
+| **LightGBM** | 0.3626 |
 
-Financial Fundamentals: Revenue, Net Income, EPS, Total Assets/Liabilities, Cash Flows.
+### Feature Importance
+Across all models, **Exponential Moving Averages (EMA)** and **Lagged Volatility** were the strongest predictors, confirming that recent volatility is the best indicator of future volatility.
 
-Target: Volatility (transformed to Volatility_Log for modeling).
+## 📁 Project Structure
+* `A1_stock_volatility_prediction.ipynb`: The complete end-to-end Python pipeline.
+* `A1_stock_volatility_labeled.csv`: The historical training dataset.
+* `A1_stock_volatility_submission.csv`: Final model predictions for the 2023-11-01 horizon.
 
-🛠️ Feature Engineering Highlights
-
-To improve model convergence and capture temporal dependencies, the following transformations were applied:
-
-Log Transformation: Raw volatility was heavily right-skewed. np.log1p was used to normalize the distribution.
-
-Cyclical Encoding: Months were transformed into Sine and Cosine components to preserve the geometric relationship between December and January.
-
-Lagged Features: 1, 2, and 3-month lags were created for volatility and trading volume to capture volatility clustering.
-
-Moving Averages: Simple (SMA) and Exponential (EMA) moving averages (3 and 6-period windows) were used to capture momentum and trend signals.
+## 💻 Requirements
+* Python 3.x
+* Pandas, Numpy
+* Matplotlib
+* Scikit-Learn
+* LightGBM
+* CatBoost
