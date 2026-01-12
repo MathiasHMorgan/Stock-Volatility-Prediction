@@ -5,7 +5,7 @@
 ![Gradient Boosting](https://img.shields.io/badge/Models-CatBoost%20%7C%20LightGBM%20%7C%20RF-green.svg)
 
 ## 📌 Project Overview
-This project predicts future stock market volatility by integrating historical price action with quarterly financial fundamentals. The primary challenge addressed is the temporal dependency of market data (volatility clustering). By implementing advanced feature engineering and comparing three ensemble-based regression models, this project identifies the most effective predictors of market risk.
+This project predicts future stock market volatility by integrating historical price action with quarterly financial fundamentals. The primary challenge addressed is the temporal dependency of market data (volatility clustering). By implementing advanced feature engineering and applying the CatBoost model, this project identifies the most effective predictors of market risk.
 
 ## 📊 Dataset Overview
 The dataset consists of **13,486 observations** including:
@@ -29,8 +29,6 @@ The models were evaluated using a **Time-Series Split** (80% training / 20% vali
 | Model | Validation RMSE |
 | :--- | :--- |
 | **CatBoost Regressor** | **0.2046** |
-| **Random Forest** | 0.2519 |
-| **LightGBM** | 0.3626 |
 
 ### Feature Importance
 Across all models, **Exponential Moving Averages (EMA)** and **Lagged Volatility** were the strongest predictors, confirming that recent volatility is the best indicator of future volatility.
@@ -45,5 +43,4 @@ Across all models, **Exponential Moving Averages (EMA)** and **Lagged Volatility
 * Pandas, Numpy
 * Matplotlib
 * Scikit-Learn
-* LightGBM
 * CatBoost
