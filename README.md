@@ -29,6 +29,8 @@ The models were evaluated using a **Time-Series Split** (80% training / 20% vali
 | Model | Validation RMSE |
 | :--- | :--- |
 | **CatBoost Regressor** | **0.2046** |
+| **Random Forest** | 0.2519 |
+| **LightGBM** | 0.3626 |
 
 ### Feature Importance
 Across all models, **Exponential Moving Averages (EMA)** and **Lagged Volatility** were the strongest predictors, confirming that recent volatility is the best indicator of future volatility.
@@ -43,4 +45,6 @@ Across all models, **Exponential Moving Averages (EMA)** and **Lagged Volatility
 * Pandas, Numpy
 * Matplotlib
 * Scikit-Learn
+  - Random Forest
 * CatBoost
+* LightGBM
